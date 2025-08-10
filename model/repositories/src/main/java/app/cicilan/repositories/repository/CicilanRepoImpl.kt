@@ -29,8 +29,7 @@ class CicilanRepoImpl(
         flow {
             val list = dao.getList(status)
 
-            if (list != null) emit(list)
-            else emit(listOf())
+            emit(list)
         }
 
     override fun getById(id: Int): Flow<Item> =

@@ -44,10 +44,10 @@ class CurrentAdapter :
 
             with(itemProgress) {
                 max = items.nominalBayar
-                setProgressCompat(items.nominalLunas!!, true)
+                setProgressCompat(items.nominalLunas, true)
             }
             sisaCicilanContent.text =
-                toRupiah(items.nominalBayar - items.nominalLunas!!)
+                toRupiah(items.nominalBayar - items.nominalLunas)
 
             itemView.setOnClickListener {
                 val direction =

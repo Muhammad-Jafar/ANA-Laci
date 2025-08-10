@@ -56,7 +56,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="Cicilan.app.main" scope="TEST" />
     <orderEntry type="module" module-name="Cicilan.data.local.main" scope="TEST" />
-    <orderEntry type="module" module-name="ANBA-Cicilanku.Cicilan.data.component.main" scope="TEST" />
+    <orderEntry type="module" module-name="Cicilan.data.component.main" scope="TEST" />
     <orderEntry type="module" module-name="Cicilan.model.entities.main" scope="TEST" />
     <orderEntry type="module" module-name="Cicilan.model.repositories.main" scope="TEST" />
     <orderEntry type="module" module-name="Cicilan.navigation.main" scope="TEST" />

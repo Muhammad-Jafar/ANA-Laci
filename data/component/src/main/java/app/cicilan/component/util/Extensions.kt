@@ -110,7 +110,9 @@ fun MaterialAutoCompleteTextView.afterInputStringChanged(afterTextChanged: (Stri
     })
 
 /* Convert money format of rupiah */
-fun Editable?.getNumber(): Int = this?.filter { it.isDigit() }?.toString()?.toIntOrNull() ?: 0
+fun Editable?.getNumber(): Int =
+    this?.filter { it.isDigit() }?.toString()?.toIntOrNull() ?: 0
+
 fun TextInputEditText.addAutoConverterToMoneyFormat(layout: TextInputLayout) =
     addTextChangedListener(object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}

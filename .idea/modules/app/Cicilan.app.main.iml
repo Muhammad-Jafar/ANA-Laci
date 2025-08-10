@@ -67,7 +67,7 @@
     <orderEntry type="jdk" jdkName="Android API 36, extension level 17 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="Cicilan.data.local.main" />
-    <orderEntry type="module" module-name="ANBA-Cicilanku.Cicilan.data.component.main" />
+    <orderEntry type="module" module-name="Cicilan.data.component.main" />
     <orderEntry type="module" module-name="Cicilan.model.entities.main" />
     <orderEntry type="module" module-name="Cicilan.model.repositories.main" />
     <orderEntry type="module" module-name="Cicilan.navigation.main" />

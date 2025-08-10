@@ -67,26 +67,5 @@ dependencies {
     api(libs.bundles.navcomponent)
     api(libs.bundles.coroutines)
     api(libs.datastore.preference)
-    /*api(libs.bundles.room)
-    ksp(libs.room.compiler)*/
 
-    /*implementation(libs.constraint.layout)
-    implementation(libs.recycleview) // RecycleView
-    implementation(libs.viewpager2) // View Pager
-    implementation(libs.preference) // Preference Screen Setting
-    implementation(libs.splashscreen) // Splashscreen*/
-
-    /*// Unit Testing
-    testImplementation(libs.bundles.unittest)
-
-    // Testing
-    testImplementation(libs.bundles.uitest)
-    testImplementation(libs.bundles.roomtest)
-    testImplementation(libs.bundles.coroutinetest)*/
-
-    // Crop Image Library
-    //implementation(libs.android.image.cropper)
-
-    // Lottie animation
-    // implementation 'com.airbnb.android:lottie:6.1.0'
 }
