@@ -53,6 +53,7 @@ android {
 dependencies {
     implementation(libs.bundles.commoncore)
     implementation(libs.preference)
+    implementation(libs.kotlinx.datetime)
     implementation(libs.bundles.lifecycle)
     implementation(libs.bundles.activityfragment)
     implementation(libs.constraint.layout)
