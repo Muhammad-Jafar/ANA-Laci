@@ -25,7 +25,7 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"/>
 
-  <app.cicilan.component.customview.button.CustomCheckbox
+  <app.cicilan.component.customviews.button.CustomCheckbox
       android:id="@+id/defaultMode"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/defaultMode"/>
 
-  <app.cicilan.component.customview.button.CustomCheckbox
+  <app.cicilan.component.customviews.button.CustomCheckbox
       android:id="@+id/lightMode"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/lightMode"/>
 
-  <app.cicilan.component.customview.button.CustomCheckbox
+  <app.cicilan.component.customviews.button.CustomCheckbox
       android:id="@+id/darkMode"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"

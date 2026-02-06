@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import app.cicilan.component.util.runWhenResumed
+import app.cicilan.component.utils.runWhenResumed
 import app.cicilan.navigation.BaseFragment
 import app.cicilan.navigation.DetailViewModel
 import app.cicilan.navigation.databinding.MainDetailLogBinding
@@ -27,7 +27,8 @@ class DetailLogFragment : BaseFragment<MainDetailLogBinding>(MainDetailLogBindin
             rvDetailLog.adapter = logAdapter
 
             runWhenResumed {
-                viewModel.getCicilanLog(args.cicilanId)
+                viewModel
+                    .getCicilanLog(args.cicilanId)
                     .collect { state ->
                         if (state.isEmpty()) {
                             viewEmpty.visibility = View.VISIBLE

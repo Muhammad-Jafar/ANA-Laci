@@ -1,4 +1,4 @@
-package app.cicilan.component.customview.button
+package app.cicilan.component.customviews.button
 
 import android.content.Context
 import android.content.res.TypedArray
@@ -21,7 +21,10 @@ class CustomCheckbox : ConstraintLayout {
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) :
         super(context, attrs, defStyleAttr)
 
-    private fun initView(context: Context, attrs: AttributeSet) {
+    private fun initView(
+        context: Context,
+        attrs: AttributeSet,
+    ) {
         inflate(context, R.layout.custom_checkbox, this)
 
         checkbox = findViewById(R.id.customCheckBox)

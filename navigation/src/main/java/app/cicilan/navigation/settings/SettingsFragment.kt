@@ -13,11 +13,11 @@ import androidx.core.view.doOnPreDraw
 import androidx.navigation.fragment.findNavController
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import app.cicilan.component.customview.preference.CustomPreference
-import app.cicilan.component.util.dotPixel
-import app.cicilan.component.util.runWhenResumed
-import app.cicilan.component.util.runWhenStarted
-import app.cicilan.component.util.showMessage
+import app.cicilan.component.customviews.preference.CustomPreference
+import app.cicilan.component.utils.dotPixel
+import app.cicilan.component.utils.runWhenResumed
+import app.cicilan.component.utils.runWhenStarted
+import app.cicilan.component.utils.showMessage
 import app.cicilan.navigation.BaseFragment
 import app.cicilan.navigation.R
 import app.cicilan.navigation.SettingsViewModel
@@ -32,8 +32,10 @@ class SettingsFragment : BaseFragment<MainSettingsBinding>(MainSettingsBinding::
     override fun renderView(bundle: Bundle?) {
         binding.toolbarSettings.setNavigationOnClickListener { findNavController().navigateUp() }
         if (bundle == null) {
-            childFragmentManager.beginTransaction()
-                .replace(R.id.settingMenuContainer, MenuSettingsFragment()).commit()
+            childFragmentManager
+                .beginTransaction()
+                .replace(R.id.settingMenuContainer, MenuSettingsFragment())
+                .commit()
         }
     }
 }
@@ -41,27 +43,32 @@ class SettingsFragment : BaseFragment<MainSettingsBinding>(MainSettingsBinding::
 class MenuSettingsFragment : PreferenceFragmentCompat() {
     private val viewModel: SettingsViewModel by viewModel()
 
-    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+    override fun onCreatePreferences(
+        savedInstanceState: Bundle?,
+        rootKey: String?,
+    ) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey)
 
         findPreference<CustomPreference>(getString(R.string.key_theme))
             ?.apply {
                 runWhenStarted {
-                    val theme = when (viewModel.getTheme.first()) {
-                        1 -> getString(R.string.light_theme)
-                        2 -> getString(R.string.dark_theme)
-                        else -> getString(R.string.default_mode)
-                    }
+                    val theme =
+                        when (viewModel.getTheme.first()) {
+                            1 -> getString(R.string.light_theme)
+                            2 -> getString(R.string.dark_theme)
+                            else -> getString(R.string.default_mode)
+                        }
                     setValue(theme)
                 }
                 setOnPreferenceClickListener {
                     val dialogTheme = DialogSettingsThemeBinding.inflate(layoutInflater)
-                    val formTheme = BottomSheetDialog(requireContext(), R.style.CustomBottomSheetDialog)
-                        .apply {
-                            setContentView(dialogTheme.root)
-                            behavior.maxHeight = 600.dotPixel()
-                            dismissWithAnimation = true
-                        }
+                    val formTheme =
+                        BottomSheetDialog(requireContext(), R.style.CustomBottomSheetDialog)
+                            .apply {
+                                setContentView(dialogTheme.root)
+                                behavior.maxHeight = 600.dotPixel()
+                                dismissWithAnimation = true
+                            }
                     with(dialogTheme) {
                         root.doOnPreDraw { formTheme.behavior.peekHeight = it.height }
                         runWhenResumed {
@@ -114,23 +121,24 @@ class MenuSettingsFragment : PreferenceFragmentCompat() {
 
         findPreference<CustomPreference>(getString(R.string.key_language))?.apply {
             runWhenStarted {
-                val language = when (viewModel.getLanguage.first()) {
-                    "in" -> getString(R.string.default_language)
-                    else -> getString(R.string.english_internasional)
-                }
+                val language =
+                    when (viewModel.getLanguage.first()) {
+                        "in" -> getString(R.string.default_language)
+                        else -> getString(R.string.english_internasional)
+                    }
                 setValue(language)
             }
 
-            fun setLanguage(lang: String?) =
-                AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(lang))
+            fun setLanguage(lang: String?) = AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(lang))
 
             setOnPreferenceClickListener {
                 val dialogLang = DialogSettingsLanguageBinding.inflate(layoutInflater)
-                val formLang = BottomSheetDialog(requireContext(), R.style.CustomBottomSheetDialog).apply {
-                    setContentView(dialogLang.root)
-                    behavior.maxHeight = 600.dotPixel()
-                    dismissWithAnimation = true
-                }
+                val formLang =
+                    BottomSheetDialog(requireContext(), R.style.CustomBottomSheetDialog).apply {
+                        setContentView(dialogLang.root)
+                        behavior.maxHeight = 600.dotPixel()
+                        dismissWithAnimation = true
+                    }
                 with(dialogLang) {
                     root.doOnPreDraw { formLang.behavior.peekHeight = it.height }
                     runWhenResumed {
@@ -207,7 +215,7 @@ class MenuSettingsFragment : PreferenceFragmentCompat() {
 
         findPreference<CustomPreference>(getString(R.string.key_about))
             ?.apply {
-                /*setValue("v".plus(BuildConfig.VERSION_NAME))*/
+                // setValue("v".plus(BuildConfig.VERSION_NAME))
                 setOnPreferenceClickListener {
                     findNavController().navigate(R.id.action_settings_to_about)
                     true

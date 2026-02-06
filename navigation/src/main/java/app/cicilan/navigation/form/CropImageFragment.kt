@@ -6,10 +6,10 @@ import android.os.Bundle
 import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import app.cicilan.component.utils.showMessage
 import app.cicilan.navigation.BaseFragment
 import app.cicilan.navigation.R
 import app.cicilan.navigation.databinding.MainImageCropBinding
-import app.cicilan.component.util.showMessage
 
 class CropImageFragment : BaseFragment<MainImageCropBinding>(MainImageCropBinding::inflate) {
     private val args: CropImageFragmentArgs by navArgs()
@@ -60,7 +60,7 @@ class CropImageFragment : BaseFragment<MainImageCropBinding>(MainImageCropBindin
     }
 
     companion object {
-        /* Image Crop Fragment */
+        // Image Crop Fragment
         const val CROP_IMAGE_RESULT = "crop_image_result"
         const val CROPPED_BITMAP = "bitmap"
     }

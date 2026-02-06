@@ -14,7 +14,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat.Type
 import androidx.core.view.updatePadding
-import app.cicilan.component.util.runWhenCreated
+import app.cicilan.component.utils.runWhenCreated
 import app.cicilan.navigation.databinding.ActivityMainBinding
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -30,11 +30,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen().setKeepOnScreenCondition {
             runWhenCreated {
-                val mode = when (viewModel.getTheme.first()) {
-                    1 -> MODE_NIGHT_NO
-                    2 -> MODE_NIGHT_YES
-                    else -> MODE_NIGHT_FOLLOW_SYSTEM
-                }
+                val mode =
+                    when (viewModel.getTheme.first()) {
+                        1 -> MODE_NIGHT_NO
+                        2 -> MODE_NIGHT_YES
+                        else -> MODE_NIGHT_FOLLOW_SYSTEM
+                    }
                 setDefaultNightMode(mode)
 
                 launch {

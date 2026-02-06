@@ -55,7 +55,7 @@
         android:layout_height="match_parent"
         android:layout_marginBottom="56dp">
 
-      <app.cicilan.component.customview.layout.CustomLayoutMenu
+      <app.cicilan.component.customviews.layout.CustomLayoutMenu
           android:id="@+id/sectionName"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
           app:layout_constraintTop_toTopOf="parent"
           app:titleMenu="@string/penyicil"/>
 
-      <app.cicilan.component.customview.layout.CustomLayoutMenu
+      <app.cicilan.component.customviews.layout.CustomLayoutMenu
           android:id="@+id/sectionCategory"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -76,7 +76,7 @@
           app:layout_constraintTop_toBottomOf="@+id/sectionName"
           app:titleMenu="@string/User_category"/>
 
-      <app.cicilan.component.customview.layout.CustomLayoutMenu
+      <app.cicilan.component.customviews.layout.CustomLayoutMenu
               android:id="@+id/sectionThingPrice"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
@@ -87,7 +87,7 @@
               app:layout_constraintTop_toBottomOf="@+id/sectionCategory"
               app:titleMenu="@string/User_price"/>
 
-      <app.cicilan.component.customview.layout.CustomLayoutMenu
+      <app.cicilan.component.customviews.layout.CustomLayoutMenu
               android:id="@+id/sectionFirstPay"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
@@ -97,7 +97,7 @@
               app:layout_constraintTop_toBottomOf="@+id/sectionThingPrice"
               app:titleMenu="@string/User_first_pay"/>
 
-      <app.cicilan.component.customview.layout.CustomLayoutMenu
+      <app.cicilan.component.customviews.layout.CustomLayoutMenu
           android:id="@+id/sectionCreatedAt"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -107,7 +107,7 @@
           app:layout_constraintTop_toBottomOf="@+id/sectionFirstPay"
           app:titleMenu="@string/created_at_title"/>
 
-      <app.cicilan.component.customview.layout.CustomLayoutMenu
+      <app.cicilan.component.customviews.layout.CustomLayoutMenu
           android:id="@+id/sectionDoneAt"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -189,7 +189,7 @@
           app:layout_constraintTop_toTopOf="@+id/dataPersen"
           tools:text="%"/>
 
-      <app.cicilan.component.customview.layout.CustomLayoutMenu
+      <app.cicilan.component.customviews.layout.CustomLayoutMenu
           android:id="@+id/sectionLunas"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -200,7 +200,7 @@
           app:layout_constraintTop_toBottomOf="@+id/targetProgressBar"
           app:titleMenu="@string/debt_done"/>
 
-      <app.cicilan.component.customview.layout.CustomLayoutMenu
+      <app.cicilan.component.customviews.layout.CustomLayoutMenu
           android:id="@+id/sectionLunasYet"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -229,7 +229,7 @@
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toBottomOf="@+id/secondDivider"/>
 
-      <app.cicilan.component.customview.layout.CustomLayoutItem
+      <app.cicilan.component.customviews.layout.CustomLayoutItem
           android:id="@+id/sectionLabaPerBulan"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -239,7 +239,7 @@
           app:layout_constraintTop_toBottomOf="@+id/detailLabaTitle"
           app:titleItem="@string/laba"/>
 
-      <app.cicilan.component.customview.layout.CustomLayoutItem
+      <app.cicilan.component.customviews.layout.CustomLayoutItem
           android:id="@+id/sectionTotalLaba"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -267,7 +267,7 @@
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toBottomOf="@+id/thirdDivider"/>
 
-      <app.cicilan.component.customview.layout.CustomLayoutItem
+      <app.cicilan.component.customviews.layout.CustomLayoutItem
           android:id="@+id/sectionNominalPerBulan"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -277,7 +277,7 @@
           app:layout_constraintTop_toBottomOf="@+id/detailDebtTitle"
           app:titleItem="@string/per_bulan_bayar"/>
 
-      <app.cicilan.component.customview.layout.CustomLayoutItem
+      <app.cicilan.component.customviews.layout.CustomLayoutItem
           android:id="@+id/sectionTotalPerBulan"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -286,7 +286,7 @@
           app:layout_constraintTop_toBottomOf="@+id/sectionNominalPerBulan"
           app:titleItem="@string/total_per_bulan"/>
 
-      <app.cicilan.component.customview.layout.CustomLayoutItem
+      <app.cicilan.component.customviews.layout.CustomLayoutItem
           android:id="@+id/sectionPeriode"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -295,7 +295,7 @@
           app:layout_constraintTop_toBottomOf="@+id/sectionTotalPerBulan"
           app:titleItem="@string/User_duration_pay"/>
 
-      <app.cicilan.component.customview.layout.CustomLayoutItem
+      <app.cicilan.component.customviews.layout.CustomLayoutItem
           android:id="@+id/sectionTenggat"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"

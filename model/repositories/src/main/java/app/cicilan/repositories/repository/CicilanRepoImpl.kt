@@ -2,17 +2,17 @@ package app.cicilan.repositories.repository
 
 import androidx.core.net.toUri
 import androidx.room.withTransaction
-import app.cicilan.component.util.currentDate
+import app.cicilan.component.utils.currentInstant
 import app.cicilan.entities.Item
 import app.cicilan.entities.ItemLog
 import app.cicilan.entities.ModalForm
 import app.cicilan.local.db.CicilanDao
 import app.cicilan.local.db.CicilanDb
 import app.cicilan.repositories.contracts.CicilanRepository
-import java.io.File
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
+import java.io.File
 
 /**
  * Created by: Muhammad Jafar
@@ -24,7 +24,6 @@ class CicilanRepoImpl(
     private val db: CicilanDb,
     private val dao: CicilanDao,
 ) : CicilanRepository {
-
     override fun get(status: String): Flow<List<Item>> =
         flow {
             val list = dao.getList(status)
@@ -43,8 +42,11 @@ class CicilanRepoImpl(
         flow {
             val counted = dao.count(status)
 
-            if (counted != null) emit(counted)
-            else emit(0)
+            if (counted != null) {
+                emit(counted)
+            } else {
+                emit(0)
+            }
         }
 
     override suspend fun insert(data: ModalForm) {
@@ -54,26 +56,27 @@ class CicilanRepoImpl(
         val laba = (nominalMembayar * 0.05).toInt()
         val totalLaba = laba * data.period
         val nominalPerBulan = (perBulan + laba)
-        val item = Item(
-            id = id,
-            createdAt = currentDate,
-            doneAt = null,
-            image = data.image,
-            name = data.person,
-            thingName = data.thing,
-            price = data.price,
-            category = data.category,
-            uangMuka = data.uangMuka,
-            nominalBayar = nominalMembayar,
-            nominalLunas = 0,
-            period = data.period,
-            tenggatBayar = data.tenggatBayar,
-            perBulan = perBulan,
-            labaPerBulan = laba,
-            nominalPerBulan = nominalPerBulan,
-            totalLaba = totalLaba,
-            status = "NO",
-        )
+        val item =
+            Item(
+                id = id,
+                createdAt = currentInstant,
+                doneAt = null,
+                image = data.image,
+                name = data.person,
+                thingName = data.thing,
+                price = data.price,
+                category = data.category,
+                uangMuka = data.uangMuka,
+                nominalBayar = nominalMembayar,
+                nominalLunas = 0,
+                period = data.period,
+                tenggatBayar = data.tenggatBayar,
+                perBulan = perBulan,
+                labaPerBulan = laba,
+                nominalPerBulan = nominalPerBulan,
+                totalLaba = totalLaba,
+                status = "NO",
+            )
 
         dao.store(item)
     }
@@ -94,12 +97,27 @@ class CicilanRepoImpl(
                 val laba = (nominalMembayar * 0.05).toInt()
                 val totalLaba = laba * data.period
                 val nominalPerBulan = (perBulan + laba)
-                val item = Item(
-                    id, createdAt, null, image, data.person,
-                    data.thing, data.category, data.price, data.uangMuka,
-                    nominalMembayar, nominalLunas, data.period, data.tenggatBayar,
-                    perBulan, laba, nominalPerBulan, totalLaba, "NO",
-                )
+                val item =
+                    Item(
+                        id,
+                        createdAt,
+                        null,
+                        image,
+                        data.person,
+                        data.thing,
+                        data.category,
+                        data.price,
+                        data.uangMuka,
+                        nominalMembayar,
+                        nominalLunas,
+                        data.period,
+                        data.tenggatBayar,
+                        perBulan,
+                        laba,
+                        nominalPerBulan,
+                        totalLaba,
+                        "NO",
+                    )
 
                 dao.update(item)
             }
@@ -120,7 +138,7 @@ class CicilanRepoImpl(
                     }
                     db.withTransaction {
                         dao.setStatusLunas(cicilanId!!, "YES")
-                        dao.setDateLunas(cicilanId!!, currentDate)
+                        dao.setDateLunas(cicilanId!!, currentInstant)
                     }
                 }
             } else {
@@ -138,7 +156,8 @@ class CicilanRepoImpl(
                 this.delete(id)
                 deleteLog(id)
                 getImagePathById(id).also {
-                    it?.toUri()
+                    it
+                        ?.toUri()
                         ?.path
                         ?.let { path -> File(path).delete() }
                 }

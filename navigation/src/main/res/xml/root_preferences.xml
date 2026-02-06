@@ -4,14 +4,14 @@
             app:iconSpaceReserved="false"
             app:title="@string/label_theme_language">
 
-        <app.cicilan.component.customview.preference.CustomPreference
+        <app.cicilan.component.customviews.preference.CustomPreference
                 app:iconPreference="@drawable/icon_theme"
                 app:key="@string/key_theme"
                 app:layout="@layout/custom_preference"
                 app:titlePreference="@string/change_theme"
                 app:valuePreference="@string/following_system"/>
 
-        <app.cicilan.component.customview.preference.CustomPreference
+        <app.cicilan.component.customviews.preference.CustomPreference
                 app:iconPreference="@drawable/icon_language"
                 app:key="@string/key_language"
                 app:layout="@layout/custom_preference"
@@ -25,19 +25,19 @@
             app:iconSpaceReserved="false"
             app:title="@string/feedback">
 
-        <app.cicilan.component.customview.preference.CustomPreference
+        <app.cicilan.component.customviews.preference.CustomPreference
                 app:iconPreference="@drawable/icon_feedback"
                 app:key="@string/key_feedback"
                 app:layout="@layout/custom_preference"
                 app:titlePreference="@string/title_share_feedback"/>
 
-        <app.cicilan.component.customview.preference.CustomPreference
+        <app.cicilan.component.customviews.preference.CustomPreference
                 app:iconPreference="@drawable/icon_rate"
                 app:key="@string/key_rating"
                 app:layout="@layout/custom_preference"
                 app:titlePreference="@string/title_rate_app"/>
 
-        <app.cicilan.component.customview.preference.CustomPreference
+        <app.cicilan.component.customviews.preference.CustomPreference
                 app:iconPreference="@drawable/icon_donate"
                 app:key="@string/key_donate"
                 app:layout="@layout/custom_preference"
@@ -50,19 +50,19 @@
             app:iconSpaceReserved="false"
             app:title="@string/about_title">
 
-        <app.cicilan.component.customview.preference.CustomPreference
+        <app.cicilan.component.customviews.preference.CustomPreference
                 app:iconPreference="@drawable/icon_faq"
                 app:key="@string/key_faq"
                 app:layout="@layout/custom_preference"
                 app:titlePreference="@string/faq"/>
 
-        <app.cicilan.component.customview.preference.CustomPreference
+        <app.cicilan.component.customviews.preference.CustomPreference
                 app:iconPreference="@drawable/icon_privacy"
                 app:key="@string/key_privacy"
                 app:layout="@layout/custom_preference"
                 app:titlePreference="@string/privacy_policy"/>
 
-        <app.cicilan.component.customview.preference.CustomPreference
+        <app.cicilan.component.customviews.preference.CustomPreference
                 app:fragment="jafar.cicilan.ui.main.settings.about.AboutFragment"
                 app:iconPreference="@drawable/icon_version"
                 app:key="@string/key_about"

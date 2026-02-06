@@ -309,7 +309,7 @@
           app:layout_constraintTop_toTopOf="@+id/setReminderTitle"/>
 
 
-      <app.cicilan.component.customview.layout.CustomLayoutItem
+      <app.cicilan.component.customviews.layout.CustomLayoutItem
           android:id="@+id/setReminderContent"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"

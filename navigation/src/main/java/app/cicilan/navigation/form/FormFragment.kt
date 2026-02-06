@@ -11,14 +11,14 @@ import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import app.cicilan.component.util.addAutoConverterToMoneyFormat
-import app.cicilan.component.util.afterInputNumberChanged
-import app.cicilan.component.util.afterInputStringChanged
-import app.cicilan.component.util.currentDate
-import app.cicilan.component.util.dotPixel
-import app.cicilan.component.util.format
-import app.cicilan.component.util.getNumber
-import app.cicilan.component.util.showSoftKeyboard
+import app.cicilan.component.utils.addAutoConverterToMoneyFormat
+import app.cicilan.component.utils.afterInputNumberChanged
+import app.cicilan.component.utils.afterInputStringChanged
+import app.cicilan.component.utils.currentInstant
+import app.cicilan.component.utils.dotPixel
+import app.cicilan.component.utils.format
+import app.cicilan.component.utils.getNumber
+import app.cicilan.component.utils.showSoftKeyboard
 import app.cicilan.entities.ModalForm
 import app.cicilan.navigation.BaseFragment
 import app.cicilan.navigation.FormViewModel
@@ -37,12 +37,14 @@ class FormFragment : BaseFragment<MainFormBinding>(MainFormBinding::inflate) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        fromStorage = registerForActivityResult(GetContent()) { uri ->
-            openImageCropFragment(uri)
-        }
-        fromCamera = registerForActivityResult(FromCamera()) { uri ->
-            openImageCropFragment(uri)
-        }
+        fromStorage =
+            registerForActivityResult(GetContent()) { uri ->
+                openImageCropFragment(uri)
+            }
+        fromCamera =
+            registerForActivityResult(FromCamera()) { uri ->
+                openImageCropFragment(uri)
+            }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -51,7 +53,8 @@ class FormFragment : BaseFragment<MainFormBinding>(MainFormBinding::inflate) {
     }
 
     override fun renderView(bundle: Bundle?) {
-        bundle?.parcelable<Uri>("imageUri")
+        bundle
+            ?.parcelable<Uri>("imageUri")
             ?.let {
                 binding.saveImage.setImageURI(it)
                 viewModel.imageUri = it
@@ -67,11 +70,12 @@ class FormFragment : BaseFragment<MainFormBinding>(MainFormBinding::inflate) {
 
         with(binding) {
             toolbarForm.apply {
-                title = if (args.item == null) {
-                    getString(R.string.add_data)
-                } else {
-                    getString(R.string.edit_data)
-                }
+                title =
+                    if (args.item == null) {
+                        getString(R.string.add_data)
+                    } else {
+                        getString(R.string.edit_data)
+                    }
                 setNavigationOnClickListener { findNavController().popBackStack() }
             }
             setFragmentResultListener(CROP_IMAGE_RESULT) { _, bundle ->
@@ -92,81 +96,89 @@ class FormFragment : BaseFragment<MainFormBinding>(MainFormBinding::inflate) {
         validate()
     }
 
-    private fun validate() = with(binding) {
-        nameInput.apply {
-            requestFocus()
-            showSoftKeyboard()
-            afterInputStringChanged {
-                saveButton.isEnabled = nameInput.text.toString().isNotEmpty()
-                nameInputLayout.error = when {
-                    it!!.isBlank() -> getString(R.string.fill_data)
-                    else -> null
+    private fun validate() =
+        with(binding) {
+            nameInput.apply {
+                requestFocus()
+                showSoftKeyboard()
+                afterInputStringChanged {
+                    saveButton.isEnabled = nameInput.text.toString().isNotEmpty()
+                    nameInputLayout.error =
+                        when {
+                            it!!.isBlank() -> getString(R.string.fill_data)
+                            else -> null
+                        }
                 }
             }
-        }
-        thingInput.afterInputStringChanged {
-            thingInputLayout.error = when {
-                it!!.isBlank() -> getString(R.string.fill_data)
-                else -> null
-            }
-        }
-        categoryInput.afterInputStringChanged {
-            categoryInputLayout.error = when {
-                it!!.isBlank() -> getString(R.string.fill_data)
-                else -> null
-            }
-        }
-        priceInput.apply {
-            addAutoConverterToMoneyFormat(priceInputLayout)
-            afterInputNumberChanged {
-                priceInputLayout.error = when {
-                    it < 500000 -> getString(R.string.form_min_harga)
-                    it > 10000000 -> getString(R.string.form_max_harga)
-                    else -> null
-                }
-            }
-        }
-        firstPayInput.apply {
-            addAutoConverterToMoneyFormat(firstInputLayout)
-            afterInputNumberChanged {
-                if (priceInput.text.getNumber() > 1) {
-                    firstInputLayout.error = when {
-                        it < 300000 -> getString(R.string.form_dp)
-                        it >= priceInput.text.getNumber() -> getString(R.string.form_dp_lessThan_harga)
+            thingInput.afterInputStringChanged {
+                thingInputLayout.error =
+                    when {
+                        it!!.isBlank() -> getString(R.string.fill_data)
                         else -> null
                     }
-                } else {
-                    firstInputLayout.error = getString(R.string.filled_price)
+            }
+            categoryInput.afterInputStringChanged {
+                categoryInputLayout.error =
+                    when {
+                        it!!.isBlank() -> getString(R.string.fill_data)
+                        else -> null
+                    }
+            }
+            priceInput.apply {
+                addAutoConverterToMoneyFormat(priceInputLayout)
+                afterInputNumberChanged {
+                    priceInputLayout.error =
+                        when {
+                            it < 500000 -> getString(R.string.form_min_harga)
+                            it > 10000000 -> getString(R.string.form_max_harga)
+                            else -> null
+                        }
                 }
             }
-        }
-        periodPayInput.afterInputNumberChanged {
-            periodInputLayout.error = when {
-                it > 12 -> getString(R.string.form_date_tenggat)
-                else -> null
+            firstPayInput.apply {
+                addAutoConverterToMoneyFormat(firstInputLayout)
+                afterInputNumberChanged {
+                    if (priceInput.text.getNumber() > 1) {
+                        firstInputLayout.error =
+                            when {
+                                it < 300000 -> getString(R.string.form_dp)
+                                it >= priceInput.text.getNumber() -> getString(R.string.form_dp_lessThan_harga)
+                                else -> null
+                            }
+                    } else {
+                        firstInputLayout.error = getString(R.string.filled_price)
+                    }
+                }
             }
-        }
-        tenggatPayInput.afterInputNumberChanged {
-            tenggatInputLayout.error = when {
-                it > 30 -> getString(R.string.form_date_periode)
-                else -> null
+            periodPayInput.afterInputNumberChanged {
+                periodInputLayout.error =
+                    when {
+                        it > 12 -> getString(R.string.form_date_tenggat)
+                        else -> null
+                    }
             }
-        }
+            tenggatPayInput.afterInputNumberChanged {
+                tenggatInputLayout.error =
+                    when {
+                        it > 30 -> getString(R.string.form_date_periode)
+                        else -> null
+                    }
+            }
 
-        setReminderSwitch.setOnCheckedChangeListener { _, state ->
-            if (state) {
-                setReminderContent.apply {
-                    visibility = View.VISIBLE
-                    setTitleItem(currentDate.format("d MMM yy HH:mm"))
-                    setContentItem("Kustom")
-                }
-            } else {
-                setReminderContent.apply {
-                    visibility = View.GONE
+            setReminderSwitch.setOnCheckedChangeListener { _, state ->
+                if (state) {
+                    setReminderContent.apply {
+                        visibility = View.VISIBLE
+                        setTitleItem(currentInstant.format("d MMM yy HH:mm"))
+                        setContentItem("Kustom")
+                    }
+                } else {
+                    setReminderContent.apply {
+                        visibility = View.GONE
+                    }
                 }
             }
         }
-    }
 
     private fun loadData(item: ModalForm) =
         with(binding) {
@@ -178,7 +190,7 @@ class FormFragment : BaseFragment<MainFormBinding>(MainFormBinding::inflate) {
                 }
             }
             nameInput.apply {
-                setText("item.namaPenyicil") //FIXME: string literal
+                setText("item.namaPenyicil") // FIXME: string literal
                 requestFocus()
                 showSoftKeyboard()
                 afterInputStringChanged { saveButton.isEnabled = this.text.toString().isNotEmpty() }
@@ -193,41 +205,89 @@ class FormFragment : BaseFragment<MainFormBinding>(MainFormBinding::inflate) {
             tenggatPayInput.setText(item.tenggatBayar)
         }
 
-    private fun doSave() = with(binding) {
-        val kategoriInput = categoryInput.text.toString()
-        val penyicil = nameInput.text.toString()
-        val barang = thingInput.text.toString()
-        val harga = priceInput.text.getNumber()
-        val dp = firstPayInput.text.getNumber()
-        val periode = periodPayInput.text.getNumber()
-        val tenggat = tenggatPayInput.text.toString()
+    private fun doSave() =
+        with(binding) {
+            val kategoriInput = categoryInput.text.toString()
+            val penyicil = nameInput.text.toString()
+            val barang = thingInput.text.toString()
+            val harga = priceInput.text.getNumber()
+            val dp = firstPayInput.text.getNumber()
+            val periode = periodPayInput.text.getNumber()
+            val tenggat = tenggatPayInput.text.toString()
 
-        when {
-            penyicil.isBlank() -> nameInputLayout.error = getString(R.string.fill_data)
-            barang.isBlank() -> thingInputLayout.error = getString(R.string.fill_data)
-            kategoriInput.isBlank() -> categoryInputLayout.error = getString(R.string.fill_data)
-            harga < 1 -> priceInputLayout.error = getString(R.string.fill_data)
-            harga < 500000 -> priceInputLayout.error = getString(R.string.form_min_harga)
-            harga > 10000000 -> priceInputLayout.error = getString(R.string.form_max_harga)
-            dp < 1 -> firstInputLayout.error = getString(R.string.fill_data)
-            dp < 300000 -> firstInputLayout.error = getString(R.string.form_dp)
-            dp > harga -> firstInputLayout.error = getString(R.string.form_dp_lessThan_harga)
-            periode < 1 -> periodInputLayout.error = getString(R.string.fill_data)
-            periode > 30 -> periodInputLayout.error = getString(R.string.form_date_tenggat)
-            tenggat.isBlank() -> tenggatInputLayout.error = getString(R.string.fill_data)
-            tenggat.toInt() > 12 -> tenggatInputLayout.error = getString(R.string.form_date_periode)
-            else -> {
-                val imageUri = viewModel.imageUri?.toString().takeIf { it != null }
-                val form = ModalForm(
-                    args.item?.id, imageUri, penyicil, barang,
-                    kategoriInput, harga, dp, periode, tenggat.toInt(),
-                )
+            when {
+                penyicil.isBlank() -> {
+                    nameInputLayout.error = getString(R.string.fill_data)
+                }
 
-                viewModel.save(form)
-                findNavController().popBackStack()
+                barang.isBlank() -> {
+                    thingInputLayout.error = getString(R.string.fill_data)
+                }
+
+                kategoriInput.isBlank() -> {
+                    categoryInputLayout.error = getString(R.string.fill_data)
+                }
+
+                harga < 1 -> {
+                    priceInputLayout.error = getString(R.string.fill_data)
+                }
+
+                harga < 500000 -> {
+                    priceInputLayout.error = getString(R.string.form_min_harga)
+                }
+
+                harga > 10000000 -> {
+                    priceInputLayout.error = getString(R.string.form_max_harga)
+                }
+
+                dp < 1 -> {
+                    firstInputLayout.error = getString(R.string.fill_data)
+                }
+
+                dp < 300000 -> {
+                    firstInputLayout.error = getString(R.string.form_dp)
+                }
+
+                dp > harga -> {
+                    firstInputLayout.error = getString(R.string.form_dp_lessThan_harga)
+                }
+
+                periode < 1 -> {
+                    periodInputLayout.error = getString(R.string.fill_data)
+                }
+
+                periode > 30 -> {
+                    periodInputLayout.error = getString(R.string.form_date_tenggat)
+                }
+
+                tenggat.isBlank() -> {
+                    tenggatInputLayout.error = getString(R.string.fill_data)
+                }
+
+                tenggat.toInt() > 12 -> {
+                    tenggatInputLayout.error = getString(R.string.form_date_periode)
+                }
+
+                else -> {
+                    val imageUri = viewModel.imageUri?.toString().takeIf { it != null }
+                    val form =
+                        ModalForm(
+                            args.item?.id,
+                            imageUri,
+                            penyicil,
+                            barang,
+                            kategoriInput,
+                            harga,
+                            dp,
+                            periode,
+                            tenggat.toInt(),
+                        )
+
+                    viewModel.save(form)
+                    findNavController().popBackStack()
+                }
             }
         }
-    }
 
     private fun openImageCropFragment(uri: Uri?) {
         uri ?: return
@@ -236,11 +296,12 @@ class FormFragment : BaseFragment<MainFormBinding>(MainFormBinding::inflate) {
 
     private fun showImageChooser() {
         val form = DialogPickImageBinding.inflate(layoutInflater)
-        val dialogChooser = BottomSheetDialog(requireContext()).apply {
-            setContentView(form.root)
-            behavior.maxHeight = 480.dotPixel()
-            dismissWithAnimation = true
-        }
+        val dialogChooser =
+            BottomSheetDialog(requireContext()).apply {
+                setContentView(form.root)
+                behavior.maxHeight = 480.dotPixel()
+                dismissWithAnimation = true
+            }
 
         with(form) {
             root.doOnPreDraw { dialogChooser.behavior.peekHeight = it.height }

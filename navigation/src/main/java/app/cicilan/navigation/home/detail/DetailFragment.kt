@@ -9,17 +9,17 @@ import androidx.core.net.toUri
 import androidx.core.view.doOnPreDraw
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import app.cicilan.component.util.addAutoConverterToMoneyFormat
-import app.cicilan.component.util.afterInputNumberChanged
-import app.cicilan.component.util.currentDate
-import app.cicilan.component.util.dotPixel
-import app.cicilan.component.util.format
-import app.cicilan.component.util.getNumber
-import app.cicilan.component.util.popupDialog
-import app.cicilan.component.util.runWhenResumed
-import app.cicilan.component.util.showMessage
-import app.cicilan.component.util.showSoftKeyboard
-import app.cicilan.component.util.toRupiah
+import app.cicilan.component.utils.addAutoConverterToMoneyFormat
+import app.cicilan.component.utils.afterInputNumberChanged
+import app.cicilan.component.utils.currentInstant
+import app.cicilan.component.utils.dotPixel
+import app.cicilan.component.utils.format
+import app.cicilan.component.utils.getNumber
+import app.cicilan.component.utils.popupDialog
+import app.cicilan.component.utils.runWhenResumed
+import app.cicilan.component.utils.showMessage
+import app.cicilan.component.utils.showSoftKeyboard
+import app.cicilan.component.utils.toRupiah
 import app.cicilan.entities.Item
 import app.cicilan.entities.ItemLog
 import app.cicilan.navigation.BaseFragment
@@ -29,8 +29,8 @@ import app.cicilan.navigation.databinding.DialogInputNominalBinding
 import app.cicilan.navigation.databinding.MainDetailBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.color.MaterialColors
-import kotlin.math.roundToInt
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import kotlin.math.roundToInt
 
 class DetailFragment : BaseFragment<MainDetailBinding>(MainDetailBinding::inflate) {
     private val viewModel: DetailViewModel by viewModel()
@@ -73,7 +73,8 @@ class DetailFragment : BaseFragment<MainDetailBinding>(MainDetailBinding::inflat
         }
 
         runWhenResumed {
-            viewModel.getCicilanById(args.cicilanId)
+            viewModel
+                .getCicilanById(args.cicilanId)
                 .collect { setData(it) }
         }
     }
@@ -81,30 +82,32 @@ class DetailFragment : BaseFragment<MainDetailBinding>(MainDetailBinding::inflat
     private fun setData(data: Item) {
         with(binding) {
             with(data) {
-                /* Header section */
+                // Header section
                 toolbarDetail.title = name
                 avatarPreview.apply {
-                    scaleType = if (image != null) {
-                        setImageURI(image?.toUri())
-                        ImageView.ScaleType.CENTER_CROP
-                    } else {
-                        setImageResource(R.drawable.icon_bg_image)
-                        ImageView.ScaleType.CENTER
-                    }
+                    scaleType =
+                        if (image != null) {
+                            setImageURI(image?.toUri())
+                            ImageView.ScaleType.CENTER_CROP
+                        } else {
+                            setImageResource(R.drawable.icon_bg_image)
+                            ImageView.ScaleType.CENTER
+                        }
                 }
                 sectionName.setContentLayout(name)
                 sectionCategory.setContentLayout(category)
-                sectionThingPrice.setContentLayout(toRupiah(price))
-                sectionFirstPay.setContentLayout(toRupiah(uangMuka))
+                sectionThingPrice.setContentLayout(price.toRupiah())
+                sectionFirstPay.setContentLayout(uangMuka.toRupiah())
                 sectionCreatedAt.setContentLayout(createdAt.format("d.MM.YY"))
                 sectionDoneAt.setContentLayout(doneAt?.toString() ?: "-")
 
-                /* Progressbar section */
-                val persen = if (nominalLunas != 0) {
-                    ((nominalLunas.toFloat() / nominalBayar.toFloat()) * 100F).roundToInt()
-                } else {
-                    0
-                }
+                // Progressbar section
+                val persen =
+                    if (nominalLunas != 0) {
+                        ((nominalLunas.toFloat() / nominalBayar.toFloat()) * 100F).roundToInt()
+                    } else {
+                        0
+                    }
                 dataPersen.text = persen.toString()
                 targetProgressBar.apply {
                     max = nominalBayar
@@ -112,20 +115,20 @@ class DetailFragment : BaseFragment<MainDetailBinding>(MainDetailBinding::inflat
                 }
                 sectionLunas.apply {
                     setTextColor(valueOf(MaterialColors.getColor(rootView, R.attr.colorOnLeafContainer)))
-                    setContentLayout(toRupiah(nominalLunas))
+                    setContentLayout(nominalLunas.toRupiah())
                 }
                 sectionLunasYet.apply {
                     setTextColor(valueOf(MaterialColors.getColor(rootView, R.attr.colorOnRoseContainer)))
-                    setContentLayout(toRupiah(nominalBayar - nominalLunas))
+                    setContentLayout((nominalBayar - nominalLunas).toRupiah())
                 }
 
-                /* Laba section */
-                sectionLabaPerBulan.setContentItem(toRupiah(labaPerBulan) + getString(R.string.per_bulan))
+                // Laba section
+                sectionLabaPerBulan.setContentItem(labaPerBulan.toRupiah() + getString(R.string.per_bulan))
                 sectionTotalLaba.setContentItem("+ ".plus(totalLaba))
 
-                /* Debt section */
-                sectionNominalPerBulan.setContentItem(toRupiah(nominalPerBulan))
-                sectionTotalPerBulan.setContentItem(toRupiah(nominalPerBulan))
+                // Debt section
+                sectionNominalPerBulan.setContentItem(nominalPerBulan.toRupiah())
+                sectionTotalPerBulan.setContentItem(nominalPerBulan.toRupiah())
                 sectionPeriode.setContentItem(period.toString())
                 sectionTenggat.setContentItem(tenggatBayar.toString())
 
@@ -146,33 +149,38 @@ class DetailFragment : BaseFragment<MainDetailBinding>(MainDetailBinding::inflat
     private fun pay(
         lunas: Int,
         utang: Int,
-        nominalBayar: Int
+        nominalBayar: Int,
     ) {
         val inputForm = DialogInputNominalBinding.inflate(layoutInflater)
-        val dialog = BottomSheetDialog(requireContext()).apply {
-            setContentView(inputForm.root)
-            behavior.maxHeight = 800.dotPixel()
-            dismissWithAnimation = true
-        }
+        val dialog =
+            BottomSheetDialog(requireContext()).apply {
+                setContentView(inputForm.root)
+                behavior.maxHeight = 800.dotPixel()
+                dismissWithAnimation = true
+            }
 
         with(inputForm) {
             root.doOnPreDraw { dialog.behavior.peekHeight = it.height }
-            fun validateInput(): Boolean = nominalInput.text.getNumber().let {
-                if (it < (utang - lunas)) {
-                    nominalInputLayout.error = when {
-                        it < 1 -> getString(R.string.fill_data)
-                        it < 100000 -> getString(R.string.input_min_limit)
-                        it > (utang - lunas) -> getString(R.string.input_fill_over)
-                        else -> return true
+
+            fun validateInput(): Boolean =
+                nominalInput.text.getNumber().let {
+                    if (it < (utang - lunas)) {
+                        nominalInputLayout.error =
+                            when {
+                                it < 1 -> getString(R.string.fill_data)
+                                it < 100000 -> getString(R.string.input_min_limit)
+                                it > (utang - lunas) -> getString(R.string.input_fill_over)
+                                else -> return true
+                            }
+                    } else {
+                        nominalInputLayout.error =
+                            when {
+                                it > (utang - lunas) -> getString(R.string.input_fill_over)
+                                else -> return true
+                            }
                     }
-                } else {
-                    nominalInputLayout.error = when {
-                        it > (utang - lunas) -> getString(R.string.input_fill_over)
-                        else -> return true
-                    }
+                    return true
                 }
-                return true
-            }
             with(nominalInput) {
                 requestFocus()
                 showSoftKeyboard()
@@ -181,7 +189,7 @@ class DetailFragment : BaseFragment<MainDetailBinding>(MainDetailBinding::inflat
                     validateInput()
                 }
                 addAutoConverterToMoneyFormat(nominalInputLayout)
-                hint = toRupiah(nominalBayar)
+                hint = nominalBayar.toRupiah()
             }
 
             noteInput.apply {
@@ -191,9 +199,18 @@ class DetailFragment : BaseFragment<MainDetailBinding>(MainDetailBinding::inflat
                         nominalInput.text.getNumber().let {
                             if (it < (utang - lunas)) {
                                 when {
-                                    it < 1 -> getString(R.string.fill_data)
-                                    it < 100000 -> showMessage(getString(R.string.input_min_limit))
-                                    it > (utang - lunas) -> showMessage(getString(R.string.input_fill_over))
+                                    it < 1 -> {
+                                        getString(R.string.fill_data)
+                                    }
+
+                                    it < 100000 -> {
+                                        showMessage(getString(R.string.input_min_limit))
+                                    }
+
+                                    it > (utang - lunas) -> {
+                                        showMessage(getString(R.string.input_fill_over))
+                                    }
+
                                     else -> {
                                         storeLog(it, noteInput.text.toString())
                                         dialog.dismiss()
@@ -201,7 +218,10 @@ class DetailFragment : BaseFragment<MainDetailBinding>(MainDetailBinding::inflat
                                 }
                             } else {
                                 when {
-                                    it > (utang - lunas) -> getString(R.string.input_fill_over)
+                                    it > (utang - lunas) -> {
+                                        getString(R.string.input_fill_over)
+                                    }
+
                                     else -> {
                                         storeLog(it, noteInput.text.toString())
                                         dialog.dismiss()
@@ -222,12 +242,21 @@ class DetailFragment : BaseFragment<MainDetailBinding>(MainDetailBinding::inflat
                                         R.anim.shake,
                                     ),
                                 )
-                                /*vibrate()*/
+                                // vibrate()
                             }
                             when {
-                                it < 1 -> getString(R.string.fill_data)
-                                it < 100000 -> getString(R.string.input_min_limit)
-                                it > (utang - lunas) -> getString(R.string.input_fill_over)
+                                it < 1 -> {
+                                    getString(R.string.fill_data)
+                                }
+
+                                it < 100000 -> {
+                                    getString(R.string.input_min_limit)
+                                }
+
+                                it > (utang - lunas) -> {
+                                    getString(R.string.input_fill_over)
+                                }
+
                                 else -> {
                                     storeLog(it, noteInput.text.toString())
                                     dialog.dismiss()
@@ -241,10 +270,13 @@ class DetailFragment : BaseFragment<MainDetailBinding>(MainDetailBinding::inflat
                                         R.anim.shake,
                                     ),
                                 )
-                                /*vibrate()*/
+                                // vibrate()
                             }
                             when {
-                                it > (utang - lunas) -> getString(R.string.input_fill_over)
+                                it > (utang - lunas) -> {
+                                    getString(R.string.input_fill_over)
+                                }
+
                                 else -> {
                                     storeLog(it, noteInput.text.toString())
                                     dialog.dismiss()
@@ -259,15 +291,18 @@ class DetailFragment : BaseFragment<MainDetailBinding>(MainDetailBinding::inflat
         dialog.show()
     }
 
-    private fun storeLog(amount: Int, note: String) {
-        val log = ItemLog(
-            null,
-            args.cicilanId,
-            currentDate,
-            amount,
-            note,
-        )
+    private fun storeLog(
+        amount: Int,
+        note: String,
+    ) {
+        val log =
+            ItemLog(
+                null,
+                args.cicilanId,
+                currentInstant,
+                amount,
+                note,
+            )
         viewModel.storeCicilanLog(log)
     }
-
 }

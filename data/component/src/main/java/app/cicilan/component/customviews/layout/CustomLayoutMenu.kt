@@ -1,4 +1,4 @@
-package app.cicilan.component.customview.layout
+package app.cicilan.component.customviews.layout
 
 import android.content.Context
 import android.content.res.ColorStateList
@@ -25,7 +25,10 @@ class CustomLayoutMenu : ConstraintLayout {
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
         super(context, attrs, defStyleAttr)
 
-    private fun initView(context: Context, attrs: AttributeSet) {
+    private fun initView(
+        context: Context,
+        attrs: AttributeSet,
+    ) {
         inflate(context, R.layout.custom_layout_menu, this)
 
         val icon = findViewById<ShapeableImageView>(R.id.iconLayoutMenu)

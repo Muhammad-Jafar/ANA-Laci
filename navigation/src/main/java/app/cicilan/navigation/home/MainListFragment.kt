@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-import app.cicilan.component.util.runWhenResumed
+import app.cicilan.component.utils.runWhenResumed
 import app.cicilan.navigation.HomeViewModel
 import app.cicilan.navigation.databinding.MainHomeListBinding
 import app.cicilan.navigation.home.HomeFragment.Companion.ARGS_TAB
@@ -29,15 +29,19 @@ class MainListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = MainHomeListBinding.inflate(
-            LayoutInflater.from(parentFragment?.context),
-            container,
-            false,
-        )
+        _binding =
+            MainHomeListBinding.inflate(
+                LayoutInflater.from(parentFragment?.context),
+                container,
+                false,
+            )
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         tabName = arguments?.getString(ARGS_TAB)
 
@@ -52,7 +56,10 @@ class MainListFragment : Fragment() {
         }
     }
 
-    private fun collectData(status: String, tabPosition: String) {
+    private fun collectData(
+        status: String,
+        tabPosition: String,
+    ) {
         runWhenResumed {
             val recyclerView =
                 if (tabPosition == TAB_CURRENT) {
@@ -67,7 +74,8 @@ class MainListFragment : Fragment() {
                     doneAdapter
                 }
 
-            viewModel.getList(status)
+            viewModel
+                .getList(status)
                 .collect { list ->
                     binding.progressBar.visibility = View.GONE
 

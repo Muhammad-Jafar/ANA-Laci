@@ -5,12 +5,12 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
-import app.cicilan.component.util.addAutoConverterToMoneyFormat
-import app.cicilan.component.util.afterInputNumberChanged
-import app.cicilan.component.util.getNumber
-import app.cicilan.component.util.runWhenResumed
-import app.cicilan.component.util.runWhenStarted
-import app.cicilan.component.util.toRupiah
+import app.cicilan.component.utils.addAutoConverterToMoneyFormat
+import app.cicilan.component.utils.afterInputNumberChanged
+import app.cicilan.component.utils.getNumber
+import app.cicilan.component.utils.runWhenResumed
+import app.cicilan.component.utils.runWhenStarted
+import app.cicilan.component.utils.toRupiah
 import app.cicilan.navigation.BaseFragment
 import app.cicilan.navigation.HomeViewModel
 import app.cicilan.navigation.R
@@ -47,16 +47,18 @@ class HomeFragment : BaseFragment<MainHomeBinding>(MainHomeBinding::inflate) {
             addItem.setOnClickListener { findNavController().navigate(R.id.action_main_to_form) }
 
             viewOfTabs.adapter = SectionPagerAdapter()
-            viewOfTabs.registerOnPageChangeCallback(object : OnPageChangeCallback() {
-                override fun onPageSelected(position: Int) {
-                    if (position == 0) {
-                        addItem.show()
-                    } else {
-                        addItem.hide()
+            viewOfTabs.registerOnPageChangeCallback(
+                object : OnPageChangeCallback() {
+                    override fun onPageSelected(position: Int) {
+                        if (position == 0) {
+                            addItem.show()
+                        } else {
+                            addItem.hide()
+                        }
+                        super.onPageSelected(position)
                     }
-                    super.onPageSelected(position)
-                }
-            })
+                },
+            )
 
             val tabTitle = listOf(R.string.debt_now, R.string.debt_done)
             TabLayoutMediator(tabs, viewOfTabs) { tab, position ->
@@ -67,15 +69,16 @@ class HomeFragment : BaseFragment<MainHomeBinding>(MainHomeBinding::inflate) {
 
     private fun showCalculate() {
         val dialogForm = DialogCalculateCicilanBinding.inflate(layoutInflater)
-        val dialog = MaterialAlertDialogBuilder(requireContext(), R.style.CustomDialog).apply {
-            setCancelable(false)
-            setTitle("Mini calculator cicilan")
-            setView(dialogForm.root)
-            setPositiveButton(getString(R.string.ok_button)) { dialog, _ -> dialog.dismiss() }
-        }
+        val dialog =
+            MaterialAlertDialogBuilder(requireContext(), R.style.CustomDialog).apply {
+                setCancelable(false)
+                setTitle("Mini calculator cicilan")
+                setView(dialogForm.root)
+                setPositiveButton(getString(R.string.ok_button)) { dialog, _ -> dialog.dismiss() }
+            }
         with(dialogForm) {
-            calculateLabel.text = toRupiah(0)
-            labaLabel.text = toRupiah(0)
+            calculateLabel.text = 0.toRupiah()
+            labaLabel.text = 0.toRupiah()
             hargaInput.addAutoConverterToMoneyFormat(hargaInputLayout)
             dpInput.addAutoConverterToMoneyFormat(dpInputLayout)
             periodeInput.addAutoConverterToMoneyFormat(periodeInputLayout)
@@ -83,14 +86,15 @@ class HomeFragment : BaseFragment<MainHomeBinding>(MainHomeBinding::inflate) {
             with(viewModel) {
                 runWhenResumed {
                     perBulanValue.observe(viewLifecycleOwner) { state ->
-                        calculateLabel.text = when {
-                            state.hargaError != null -> getString(R.string.calculating)
-                            state.dpError != null -> getString(R.string.calculating)
-                            state.periodeError != null -> getString(R.string.calculating)
-                            else -> toRupiah(state.isResultThere)
-                        }
+                        calculateLabel.text =
+                            when {
+                                state.hargaError != null -> getString(R.string.calculating)
+                                state.dpError != null -> getString(R.string.calculating)
+                                state.periodeError != null -> getString(R.string.calculating)
+                                else -> state.isResultThere.toRupiah()
+                            }
                         labaLabel.setTextColor(getColor(labaLabel, R.attr.colorLeaf))
-                        labaLabel.text = "+ ".plus(toRupiah(labaValue)).plus("/ Bulan")
+                        labaLabel.text = "+ ".plus(labaValue.toRupiah()).plus("/ Bulan")
                     }
                 }
 
@@ -120,9 +124,9 @@ class HomeFragment : BaseFragment<MainHomeBinding>(MainHomeBinding::inflate) {
         dialog.show()
     }
 
-    inner class SectionPagerAdapter :
-        FragmentStateAdapter(childFragmentManager, viewLifecycleOwner.lifecycle) {
+    inner class SectionPagerAdapter : FragmentStateAdapter(childFragmentManager, viewLifecycleOwner.lifecycle) {
         override fun getItemCount(): Int = 2
+
         override fun createFragment(position: Int): Fragment {
             val fragment = MainListFragment()
             val data = Bundle()
@@ -139,7 +143,7 @@ class HomeFragment : BaseFragment<MainHomeBinding>(MainHomeBinding::inflate) {
     }
 
     companion object {
-        /* Home list */
+        // Home list
         const val ARGS_TAB = "Tab argument"
         const val TAB_CURRENT = "Tab current"
         const val TAB_DONE = "Tab done"
