@@ -6,12 +6,16 @@ plugins {
 
 android {
     namespace = "app.cicilan.navigation"
-    compileSdk = libs.versions.compileSdk.get()
-        .toInt()
+    compileSdk =
+        libs.versions.compileSdk
+            .get()
+            .toInt()
 
     defaultConfig {
-        minSdk = libs.versions.minSdk.get()
-            .toInt()
+        minSdk =
+            libs.versions.minSdk
+                .get()
+                .toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -23,17 +27,27 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
-        freeCompilerArgs += "-Xcontext-receivers"
+
+    kotlin {
+        compilerOptions {
+            jvmToolchain(17)
+            freeCompilerArgs =
+                listOf(
+                    "-Xcontext-parameters",
+                )
+        }
     }
+
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -46,25 +60,17 @@ dependencies {
     implementation(project(":model:entities"))
     implementation(project(":model:repositories"))
 
-    implementation(libs.bundles.koin)
     implementation(libs.bundles.commoncore)
     implementation(libs.bundles.lifecycle)
     implementation(libs.bundles.activityfragment)
+    implementation(libs.bundles.koin)
     implementation(libs.bundles.navcomponent)
     implementation(libs.bundles.coroutines)
-
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-
     implementation(libs.constraint.layout)
-    implementation(libs.recycleview) // RecycleView
-
-    implementation(libs.datastore.preference) // datastore
-    implementation(libs.viewpager2) // View Pager
-    implementation(libs.preference) // Preference Screen Setting
-    implementation(libs.splashscreen) // Splashscreen
-
-    // Crop Image Library
+    implementation(libs.recycleview)
+    implementation(libs.datastore.preference)
+    implementation(libs.viewpager2)
+    implementation(libs.preference)
+    implementation(libs.splashscreen)
     implementation(libs.android.image.cropper)
 }

@@ -5,12 +5,16 @@ plugins {
 
 android {
     namespace = "app.cicilan.repisitories"
-    compileSdk = libs.versions.compileSdk.get()
-        .toInt()
+    compileSdk =
+        libs.versions.compileSdk
+            .get()
+            .toInt()
 
     defaultConfig {
-        minSdk = libs.versions.minSdk.get()
-            .toInt()
+        minSdk =
+            libs.versions.minSdk
+                .get()
+                .toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -30,8 +34,11 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        freeCompilerArgs += "-Xcontext-receivers"
+
+    kotlin {
+        compilerOptions {
+            jvmToolchain(17)
+        }
     }
 
     buildFeatures {

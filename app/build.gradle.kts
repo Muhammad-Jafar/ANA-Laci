@@ -7,45 +7,58 @@ plugins {
 
 android {
     namespace = "app.cicilan.app"
-    compileSdk = libs.versions.compileSdk.get()
-        .toInt()
+    compileSdk =
+        libs.versions.compileSdk
+            .get()
+            .toInt()
 
     defaultConfig {
         applicationId = "app.cicilan.app"
-        minSdk = libs.versions.minSdk.get()
-            .toInt()
-        targetSdk = libs.versions.compileSdk.get()
-            .toInt()
+        minSdk =
+            libs.versions.minSdk
+                .get()
+                .toInt()
+        targetSdk =
+            libs.versions.targetSdk
+                .get()
+                .toInt()
         versionCode = 7
         versionName = "1.1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
+
     buildTypes {
-        release {
+        getByName("release") {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
             )
         }
-        debug {
+        getByName("debug") {
             isDebuggable = true
             applicationIdSuffix = ".debug"
             versionNameSuffix = "-debug"
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
+
+    kotlin {
+        compilerOptions {
+            jvmToolchain(17)
+        }
     }
+
     buildFeatures {
         viewBinding = true
     }
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -67,5 +80,4 @@ dependencies {
     api(libs.bundles.navcomponent)
     api(libs.bundles.coroutines)
     api(libs.datastore.preference)
-
 }
