@@ -1,14 +1,14 @@
 package app.cicilan.component.utils
 
+import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.inputmethod.InputMethodManager
-import androidx.appcompat.app.AppCompatActivity
+import android.widget.TextView
+import app.cicilan.component.R
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import java.text.NumberFormat
-import java.util.*
 
 /**
  * Created by: Muhammad Jafar
@@ -16,96 +16,69 @@ import java.util.*
  * Reach me: 131.powerfull@gmail.com
  */
 
-fun TextInputEditText.showSoftKeyboard() {
-    if (this.requestFocus()) {
-        (context.getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager)
-            .showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
+enum class KeyboardState {
+    HIDE,
+    SHOW,
+}
+
+fun TextInputEditText.setSoftKeyboard(state: KeyboardState) {
+    val inputMethod =
+        context.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+            ?: return
+
+    when (state) {
+        KeyboardState.HIDE -> inputMethod.hideSoftInputFromWindow(windowToken, 0)
+        else -> inputMethod.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
     }
 }
 
-fun TextInputEditText.hideSoftKeyboard() {
-    (context.getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager)
-        .hideSoftInputFromWindow(this.windowToken, 0)
-}
-
-fun TextInputEditText.afterInputNumberChanged(afterTextChanged: (Int) -> Unit) =
-    this.addTextChangedListener(
-        object : TextWatcher {
-            override fun beforeTextChanged(
-                s: CharSequence,
-                start: Int,
-                count: Int,
-                after: Int,
-            ) {
-            }
-
-            override fun onTextChanged(
-                s: CharSequence,
-                start: Int,
-                before: Int,
-                count: Int,
-            ) {
-            }
-
-            override fun afterTextChanged(editable: Editable?) {
-                afterTextChanged.invoke(editable.getNumber())
-            }
-        },
-    )
+fun TextInputEditText.afterInputNumberChanged(afterTextChanged: (Int?) -> Unit) =
+    afterTextChanged { editable ->
+        afterTextChanged(editable?.getNumber())
+    }
 
 fun TextInputEditText.afterInputStringChanged(afterTextChanged: (String?) -> Unit) =
-    this.addTextChangedListener(
-        object : TextWatcher {
-            override fun beforeTextChanged(
-                s: CharSequence,
-                start: Int,
-                count: Int,
-                after: Int,
-            ) {
-            }
-
-            override fun onTextChanged(
-                s: CharSequence,
-                start: Int,
-                before: Int,
-                count: Int,
-            ) {
-            }
-
-            override fun afterTextChanged(editable: Editable?) {
-                afterTextChanged.invoke(editable.toString())
-            }
-        },
-    )
+    afterTextChanged { editable ->
+        afterTextChanged(editable?.toString())
+    }
 
 fun MaterialAutoCompleteTextView.afterInputStringChanged(afterTextChanged: (String?) -> Unit) =
+    afterTextChanged { editable ->
+        afterTextChanged(editable?.toString())
+    }
+
+private fun TextView.afterTextChanged(onAfterTextChanged: (Editable?) -> Unit) {
     this.addTextChangedListener(
         object : TextWatcher {
             override fun beforeTextChanged(
-                s: CharSequence,
+                s: CharSequence?,
                 start: Int,
                 count: Int,
                 after: Int,
-            ) {
-            }
+            ) = Unit
 
             override fun onTextChanged(
-                s: CharSequence,
+                s: CharSequence?,
                 start: Int,
                 before: Int,
                 count: Int,
-            ) {
-            }
+            ) = Unit
 
-            override fun afterTextChanged(editable: Editable?) {
-                afterTextChanged.invoke(editable.toString())
+            override fun afterTextChanged(s: Editable?) {
+                onAfterTextChanged(s)
             }
         },
     )
+}
 
-fun Editable?.getNumber(): Int = this?.filter { it.isDigit() }?.toString()?.toIntOrNull() ?: 0
+fun Editable?.getNumber(): Int =
+    this
+        ?.filter { it.isDigit() }
+        ?.toString()
+        ?.toIntOrNull()
+        ?: 0
 
-fun TextInputEditText.addAutoConverterToMoneyFormat(layout: TextInputLayout) =
+fun TextInputEditText.digitNumberArranged(layout: TextInputLayout) {
     addTextChangedListener(
         object : TextWatcher {
             override fun beforeTextChanged(
@@ -116,37 +89,37 @@ fun TextInputEditText.addAutoConverterToMoneyFormat(layout: TextInputLayout) =
             ) {
             }
 
-            override fun afterTextChanged(s: Editable?) {}
-
             override fun onTextChanged(
-                s: CharSequence?,
+                textChanged: CharSequence?,
                 start: Int,
                 before: Int,
                 count: Int,
-            ) {
-                s?.filter { it.isDigit() }?.toString()?.let {
-                    removeTextChangedListener(this)
-                    if (it.isNotEmpty()) {
-                        val result = it.toIntOrNull()
-                        if (result != null) {
-                            val format =
-                                NumberFormat
-                                    .getInstance(Locale("in"))
-                                    .apply { maximumFractionDigits = 0 }
-                                    .format(result)
-                            setText(format)
-                            setSelection(format.length)
-                        } else {
-                            layout.error = "Max limit"
-                            // context.getString(R.string.input_over)
-                        }
-                    } else {
-                        text?.clear()
-                    }
+            ) = Unit
 
-                    addTextChangedListener(this)
+            override fun afterTextChanged(editable: Editable?) {
+                val digits =
+                    editable
+                        ?.filter(Char::isDigit)
+                        ?.toString()
+                        .orEmpty()
+                val digitValue = digits.toIntOrNull()
+                val formatted = digitValue.toRupiah()
+
+                if (digits.isEmpty()) {
+                    text?.clear()
                     layout.error = null
+                    return
                 }
+
+                if (digitValue == null) {
+                    layout.error = context.getString(R.string.input_over)
+                    return
+                }
+
+                setText(formatted)
+                setSelection(formatted.length)
+                layout.error = null
             }
         },
     )
+}

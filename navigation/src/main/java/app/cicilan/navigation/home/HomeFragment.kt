@@ -5,8 +5,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
-import app.cicilan.component.utils.addAutoConverterToMoneyFormat
 import app.cicilan.component.utils.afterInputNumberChanged
+import app.cicilan.component.utils.digitNumberArranged
 import app.cicilan.component.utils.getNumber
 import app.cicilan.component.utils.runWhenResumed
 import app.cicilan.component.utils.runWhenStarted
@@ -79,9 +79,9 @@ class HomeFragment : BaseFragment<MainHomeBinding>(MainHomeBinding::inflate) {
         with(dialogForm) {
             calculateLabel.text = 0.toRupiah()
             labaLabel.text = 0.toRupiah()
-            hargaInput.addAutoConverterToMoneyFormat(hargaInputLayout)
-            dpInput.addAutoConverterToMoneyFormat(dpInputLayout)
-            periodeInput.addAutoConverterToMoneyFormat(periodeInputLayout)
+            hargaInput.digitNumberArranged(hargaInputLayout)
+            dpInput.digitNumberArranged(dpInputLayout)
+            periodeInput.digitNumberArranged(periodeInputLayout)
 
             with(viewModel) {
                 runWhenResumed {

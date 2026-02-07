@@ -21,7 +21,7 @@ class DetailLogAdapter : ListAdapter<ItemLog, DetailLogAdapter.ViewHolder>(DIFF_
         position: Int,
     ) = holder.bind(getItem(position))
 
-    inner class ViewHolder(
+    class ViewHolder(
         private val binding: ItemDetailLogBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ItemLog) =

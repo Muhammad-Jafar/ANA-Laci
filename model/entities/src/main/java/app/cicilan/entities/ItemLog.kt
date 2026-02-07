@@ -10,7 +10,7 @@ import androidx.room.PrimaryKey
  * Find me: 131.powerfull@gmail.com
  */
 
-@Entity()
+@Entity
 data class ItemLog(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")

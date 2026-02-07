@@ -11,7 +11,6 @@ import app.cicilan.local.db.CicilanDb
 import app.cicilan.repositories.contracts.CicilanRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.runBlocking
 import java.io.File
 
 /**
@@ -131,7 +130,7 @@ class CicilanRepoImpl(
             val currentNominaLunas = data.amount + nominalLunas
 
             if (currentNominaLunas == nominalBayar) {
-                runBlocking {
+                run {
                     db.withTransaction {
                         dao.setNominalLunas(cicilanId!!, amount)
                         dao.storeLog(data)

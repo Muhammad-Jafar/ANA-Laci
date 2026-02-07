@@ -11,14 +11,13 @@ import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import app.cicilan.component.utils.addAutoConverterToMoneyFormat
 import app.cicilan.component.utils.afterInputNumberChanged
 import app.cicilan.component.utils.afterInputStringChanged
 import app.cicilan.component.utils.currentInstant
+import app.cicilan.component.utils.digitNumberArranged
 import app.cicilan.component.utils.dotPixel
 import app.cicilan.component.utils.format
 import app.cicilan.component.utils.getNumber
-import app.cicilan.component.utils.showSoftKeyboard
 import app.cicilan.entities.ModalForm
 import app.cicilan.navigation.BaseFragment
 import app.cicilan.navigation.FormViewModel
@@ -99,8 +98,6 @@ class FormFragment : BaseFragment<MainFormBinding>(MainFormBinding::inflate) {
     private fun validate() =
         with(binding) {
             nameInput.apply {
-                requestFocus()
-                showSoftKeyboard()
                 afterInputStringChanged {
                     saveButton.isEnabled = nameInput.text.toString().isNotEmpty()
                     nameInputLayout.error =
@@ -125,46 +122,53 @@ class FormFragment : BaseFragment<MainFormBinding>(MainFormBinding::inflate) {
                     }
             }
             priceInput.apply {
-                addAutoConverterToMoneyFormat(priceInputLayout)
+                digitNumberArranged(priceInputLayout)
                 afterInputNumberChanged {
-                    priceInputLayout.error =
-                        when {
-                            it < 500000 -> getString(R.string.form_min_harga)
-                            it > 10000000 -> getString(R.string.form_max_harga)
-                            else -> null
-                        }
+                    if (it != null) {
+                        priceInputLayout.error =
+                            when {
+                                it < 500000 -> getString(R.string.form_min_harga)
+                                it > 10000000 -> getString(R.string.form_max_harga)
+                                else -> null
+                            }
+                    }
                 }
             }
             firstPayInput.apply {
-                addAutoConverterToMoneyFormat(firstInputLayout)
+                digitNumberArranged(firstInputLayout)
                 afterInputNumberChanged {
                     if (priceInput.text.getNumber() > 1) {
-                        firstInputLayout.error =
-                            when {
-                                it < 300000 -> getString(R.string.form_dp)
-                                it >= priceInput.text.getNumber() -> getString(R.string.form_dp_lessThan_harga)
-                                else -> null
-                            }
+                        if (it != null) {
+                            firstInputLayout.error =
+                                when {
+                                    it < 300000 -> getString(R.string.form_dp)
+                                    it >= priceInput.text.getNumber() -> getString(R.string.form_dp_lessThan_harga)
+                                    else -> null
+                                }
+                        }
                     } else {
                         firstInputLayout.error = getString(R.string.filled_price)
                     }
                 }
             }
             periodPayInput.afterInputNumberChanged {
-                periodInputLayout.error =
-                    when {
-                        it > 12 -> getString(R.string.form_date_tenggat)
-                        else -> null
-                    }
+                if (it != null) {
+                    periodInputLayout.error =
+                        when {
+                            it > 12 -> getString(R.string.form_date_tenggat)
+                            else -> null
+                        }
+                }
             }
             tenggatPayInput.afterInputNumberChanged {
-                tenggatInputLayout.error =
-                    when {
-                        it > 30 -> getString(R.string.form_date_periode)
-                        else -> null
-                    }
+                if (it != null) {
+                    tenggatInputLayout.error =
+                        when {
+                            it > 30 -> getString(R.string.form_date_periode)
+                            else -> null
+                        }
+                }
             }
-
             setReminderSwitch.setOnCheckedChangeListener { _, state ->
                 if (state) {
                     setReminderContent.apply {
@@ -191,15 +195,14 @@ class FormFragment : BaseFragment<MainFormBinding>(MainFormBinding::inflate) {
             }
             nameInput.apply {
                 setText("item.namaPenyicil") // FIXME: string literal
-                requestFocus()
-                showSoftKeyboard()
+//                requestFocus()
                 afterInputStringChanged { saveButton.isEnabled = this.text.toString().isNotEmpty() }
             }
             thingInput.setText(item.thing)
             categoryInput.setText(item.category, false)
-            priceInput.addAutoConverterToMoneyFormat(priceInputLayout)
+            priceInput.digitNumberArranged(priceInputLayout)
             priceInput.setText(item.price.toString())
-            firstPayInput.addAutoConverterToMoneyFormat(firstInputLayout)
+            firstPayInput.digitNumberArranged(firstInputLayout)
             firstPayInput.setText(item.uangMuka.toString())
             periodPayInput.setText(item.period)
             tenggatPayInput.setText(item.tenggatBayar)

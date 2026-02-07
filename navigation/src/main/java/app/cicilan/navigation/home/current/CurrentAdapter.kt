@@ -26,7 +26,7 @@ class CurrentAdapter : ListAdapter<Item, CurrentAdapter.ViewHolder>(DIFF_CALLBAC
         position: Int,
     ) = holder.bind(getItem(position))
 
-    inner class ViewHolder(
+    class ViewHolder(
         private val binding: ItemCurrentBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(items: Item) =

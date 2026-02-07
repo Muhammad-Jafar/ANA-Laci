@@ -9,16 +9,15 @@ import androidx.core.net.toUri
 import androidx.core.view.doOnPreDraw
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import app.cicilan.component.utils.addAutoConverterToMoneyFormat
 import app.cicilan.component.utils.afterInputNumberChanged
 import app.cicilan.component.utils.currentInstant
+import app.cicilan.component.utils.digitNumberArranged
 import app.cicilan.component.utils.dotPixel
 import app.cicilan.component.utils.format
 import app.cicilan.component.utils.getNumber
 import app.cicilan.component.utils.popupDialog
 import app.cicilan.component.utils.runWhenResumed
 import app.cicilan.component.utils.showMessage
-import app.cicilan.component.utils.showSoftKeyboard
 import app.cicilan.component.utils.toRupiah
 import app.cicilan.entities.Item
 import app.cicilan.entities.ItemLog
@@ -182,13 +181,11 @@ class DetailFragment : BaseFragment<MainDetailBinding>(MainDetailBinding::inflat
                     return true
                 }
             with(nominalInput) {
-                requestFocus()
-                showSoftKeyboard()
                 afterInputNumberChanged {
                     doInputButton.isEnabled = nominalInput.text.getNumber() > 1
                     validateInput()
                 }
-                addAutoConverterToMoneyFormat(nominalInputLayout)
+                digitNumberArranged(nominalInputLayout)
                 hint = nominalBayar.toRupiah()
             }
 
