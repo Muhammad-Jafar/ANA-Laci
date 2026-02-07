@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:transitionGroup="true"
-    tools:context="app.cicilan.navigation.settings.donate.DonateFragment">
+    tools:context="proj.laci.navigation.settings.donate.DonateFragment">
 
   <com.google.android.material.appbar.AppBarLayout
       android:id="@+id/appBar"

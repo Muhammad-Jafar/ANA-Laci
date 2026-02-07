@@ -12,7 +12,7 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "Cicilan"
+rootProject.name = "Laci"
 
 include(":app")
 include(":navigation")

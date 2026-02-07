@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:transitionGroup="true"
-    tools:context="app.cicilan.navigation.form.FormFragment">
+    tools:context="proj.laci.navigation.form.FormFragment">
 
   <com.google.android.material.appbar.AppBarLayout
       android:id="@+id/appBar"
@@ -309,7 +309,7 @@
           app:layout_constraintTop_toTopOf="@+id/setReminderTitle"/>
 
 
-      <app.cicilan.component.customviews.layout.CustomLayoutItem
+      <proj.yopro.laci.component.customviews.layout.CustomLayoutItem
           android:id="@+id/setReminderContent"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"

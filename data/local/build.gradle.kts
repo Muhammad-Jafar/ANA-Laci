@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "app.cicilan.local"
+    namespace = "proj.yopro.laci.local"
     compileSdk =
         libs.versions.compileSdk
             .get()

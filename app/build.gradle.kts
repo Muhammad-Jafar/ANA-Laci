@@ -6,14 +6,14 @@ plugins {
 }
 
 android {
-    namespace = "app.cicilan.app"
+    namespace = "proj.yopro.laci"
     compileSdk =
         libs.versions.compileSdk
             .get()
             .toInt()
 
     defaultConfig {
-        applicationId = "app.cicilan.app"
+        applicationId = "proj.yopro.laci"
         minSdk =
             libs.versions.minSdk
                 .get()

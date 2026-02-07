@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "app.cicilan.repisitories"
+    namespace = "proj.yopro.laci.repisitories"
     compileSdk =
         libs.versions.compileSdk
             .get()

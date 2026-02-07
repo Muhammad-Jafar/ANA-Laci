@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:transitionGroup="true"
-    tools:context="app.cicilan.navigation.settings.about.AboutFragment">
+    tools:context="proj.laci.navigation.settings.about.AboutFragment">
 
   <com.google.android.material.appbar.AppBarLayout
       android:id="@+id/appBar"

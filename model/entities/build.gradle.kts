@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "app.cicilan.entities"
+    namespace = "proj.yopro.laci.entities"
     compileSdk =
         libs.versions.compileSdk
             .get()

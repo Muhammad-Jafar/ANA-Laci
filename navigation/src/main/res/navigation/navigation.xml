@@ -6,7 +6,7 @@
 
     <fragment
             android:id="@+id/MainFragment"
-            android:name="app.cicilan.navigation.home.HomeFragment"
+            android:name="proj.yopro.laci.navigation.home.HomeFragment"
             android:label="@string/app_name"
             tools:layout="@layout/main_home">
         <action
@@ -22,12 +22,12 @@
 
     <fragment
             android:id="@+id/formFragment"
-            android:name="app.cicilan.navigation.form.FormFragment"
+            android:name="proj.yopro.laci.navigation.form.FormFragment"
             android:label="fragment_form"
             tools:layout="@layout/main_form">
 
         <argument android:name="item"
-                  app:argType="app.cicilan.entities.ModalForm"
+                  app:argType="proj.yopro.laci.entities.ModalForm"
                   app:nullable="true"
                   android:defaultValue="@null"/>
         <action
@@ -38,7 +38,7 @@
 
     <fragment
             android:id="@+id/imageCropFragment"
-            android:name="app.cicilan.navigation.form.CropImageFragment"
+            android:name="proj.yopro.laci.navigation.form.CropImageFragment"
             android:label="fragment_image_crop"
             tools:layout="@layout/main_image_crop">
 
@@ -48,7 +48,7 @@
 
     <fragment
             android:id="@+id/detailCicilanFragment"
-            android:name="app.cicilan.navigation.home.detail.DetailFragment"
+            android:name="proj.yopro.laci.navigation.home.detail.DetailFragment"
             tools:layout="@layout/main_detail">
 
         <argument android:name="cicilanId"
@@ -63,7 +63,7 @@
 
     <fragment
             android:id="@+id/detailLogFragment"
-            android:name="app.cicilan.navigation.home.detail.DetailLogFragment"
+            android:name="proj.yopro.laci.navigation.home.detail.DetailLogFragment"
             android:label="main_cicilan_berjalan_detail_log"
             tools:layout="@layout/main_detail_log">
 
@@ -73,7 +73,7 @@
 
     <fragment
             android:id="@+id/settingsFragment"
-            android:name="app.cicilan.navigation.settings.SettingsFragment"
+            android:name="proj.yopro.laci.navigation.settings.SettingsFragment"
             android:label="main_settings"
             tools:layout="@layout/main_settings">
         <action
@@ -86,13 +86,13 @@
 
     <fragment
             android:id="@+id/aboutFragment"
-            android:name="app.cicilan.navigation.settings.about.AboutFragment"
+            android:name="proj.yopro.laci.navigation.settings.about.AboutFragment"
             android:label="main_settings_about"
             tools:layout="@layout/main_settings_about"/>
 
     <fragment
             android:id="@+id/donateFragment"
-            android:name="app.cicilan.navigation.settings.donate.DonateFragment"
+            android:name="proj.yopro.laci.navigation.settings.donate.DonateFragment"
             android:label="main_settings_donate"
             tools:layout="@layout/main_settings_donate"/>
 

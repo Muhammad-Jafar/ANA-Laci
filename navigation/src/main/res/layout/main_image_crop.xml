@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:transitionGroup="true"
-    tools:context="app.cicilan.navigation.form.CropImageFragment">
+    tools:context="proj.laci.navigation.form.CropImageFragment">
 
   <com.google.android.material.appbar.AppBarLayout
       android:id="@+id/appBar"

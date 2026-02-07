@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "app.cicilan.navigation"
+    namespace = "proj.yopro.laci.navigation"
     compileSdk =
         libs.versions.compileSdk
             .get()

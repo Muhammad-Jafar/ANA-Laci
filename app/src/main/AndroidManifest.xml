@@ -9,7 +9,7 @@
   <uses-permission android:name="android.permission.VIBRATE"/>
 
   <application
-      android:name="app.cicilan.AppModule"
+      android:name="proj.yopro.laci.AppModule"
       android:allowBackup="true"
       android:icon="@mipmap/app_logo"
       android:label="@string/app_name"
@@ -21,7 +21,7 @@
       android:enableOnBackInvokedCallback="true">
 
     <activity
-        android:name="app.cicilan.navigation.MainActivity"
+        android:name="proj.yopro.laci.navigation.MainActivity"
         android:exported="true"
         android:windowSoftInputMode="adjustResize">
       <intent-filter>
@@ -32,7 +32,7 @@
 
     <provider
         android:name="androidx.core.content.FileProvider"
-        android:authorities="app.cicilan"
+        android:authorities="proj.laci"
         android:exported="false"
         android:grantUriPermissions="true">
       <meta-data
