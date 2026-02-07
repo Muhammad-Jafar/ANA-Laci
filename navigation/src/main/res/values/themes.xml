@@ -44,7 +44,7 @@
     <item name="harmonizeLeaf">true</item>
 
     <item name="android:windowActivityTransitions">true</item>
-    <item name="fontFamily">@font/quick_sand_medium</item>
+<!--    <item name="fontFamily">@font/quick_sand_medium</item>-->
 
     <item name="android:statusBarColor">@android:color/transparent</item>
     <item name="android:navigationBarColor">@android:color/transparent</item>
@@ -68,7 +68,7 @@
   </style>
 
   <style name="CustomTitleCollapseExpanded" parent="TextAppearance.Material3.HeadlineSmall">
-    <item name="fontFamily">@font/quick_sand_regular</item>
+<!--    <item name="fontFamily">@font/quick_sand_regular</item>-->
   </style>
 
   <style name="CustomCollapseMedium" parent="Widget.Material3.CollapsingToolbar.Medium">
@@ -86,7 +86,7 @@
 
   <style name="ToolbarTitle" parent="TextAppearance.Material3.ActionBar.Title">
     <item name="android:textSize">18sp</item>
-    <item name="fontFamily">@font/quick_sand_semi_bold</item>
+<!--    <item name="fontFamily">@font/quick_sand_semi_bold</item>-->
     <item name="android:layout_width">wrap_content</item>
     <item name="android:layout_height">wrap_content</item>
   </style>
@@ -100,7 +100,7 @@
   </style>
 
   <style name="CustomTabText" parent="TextAppearance.Material3.LabelLarge">
-    <item name="fontFamily">@font/quick_sand_semi_bold</item>
+<!--    <item name="fontFamily">@font/quick_sand_semi_bold</item>-->
   </style>
 
   <!-- Custom FAB Button -->
@@ -115,44 +115,44 @@
 
   <!-- Text UI Theme -->
   <style name="HeadingApp" parent="TextAppearance.Material3.ActionBar.Title">
-    <item name="fontFamily">@font/quick_sand_bold</item>
+<!--    <item name="fontFamily">@font/quick_sand_bold</item>-->
     <item name="android:layout_width">wrap_content</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:textColor">?attr/colorControlNormal</item>
   </style>
 
   <style name="HeadingTitle" parent="TextAppearance.Material3.TitleLarge">
-    <item name="fontFamily">@font/quick_sand_medium</item>
+<!--    <item name="fontFamily">@font/quick_sand_medium</item>-->
     <item name="android:layout_width">wrap_content</item>
     <item name="android:layout_height">wrap_content</item>
   </style>
 
   <style name="HeadingSubTitle" parent="TextAppearance.Material3.TitleMedium">
-    <item name="fontFamily">@font/quick_sand_medium</item>
+<!--    <item name="fontFamily">@font/quick_sand_medium</item>-->
     <item name="android:layout_width">wrap_content</item>
     <item name="android:layout_height">wrap_content</item>
   </style>
 
   <style name="BodyTitle" parent="TextAppearance.Material3.LabelLarge">
-    <item name="fontFamily">@font/quick_sand_medium</item>
+<!--    <item name="fontFamily">@font/quick_sand_medium</item>-->
     <item name="android:layout_width">wrap_content</item>
     <item name="android:layout_height">wrap_content</item>
   </style>
 
   <style name="BodyHeadContent" parent="TextAppearance.Material3.BodyLarge">
-    <item name="fontFamily">@font/quick_sand_medium</item>
+<!--    <item name="fontFamily">@font/quick_sand_medium</item>-->
     <item name="android:layout_width">wrap_content</item>
     <item name="android:layout_height">wrap_content</item>
   </style>
 
   <style name="BodyContent" parent="TextAppearance.Material3.BodyMedium">
-    <item name="fontFamily">@font/quick_sand_medium</item>
+<!--    <item name="fontFamily">@font/quick_sand_medium</item>-->
     <item name="android:layout_width">wrap_content</item>
     <item name="android:layout_height">wrap_content</item>
   </style>
 
   <style name="BodySubContent" parent="TextAppearance.Material3.BodySmall">
-    <item name="fontFamily">@font/quick_sand_medium</item>
+<!--    <item name="fontFamily">@font/quick_sand_medium</item>-->
     <item name="android:layout_width">wrap_content</item>
     <item name="android:layout_height">wrap_content</item>
   </style>
@@ -160,7 +160,7 @@
   <!-- First Button Theme -->
   <style name="CustomFilledButton" parent="@style/Widget.Material3.Button">
     <item name="android:textStyle">bold</item>
-    <item name="fontFamily">@font/quick_sand_medium</item>
+<!--    <item name="fontFamily">@font/quick_sand_medium</item>-->
     <item name="android:layout_width">match_parent</item>
     <item name="android:layout_height">56dp</item>
     <item name="android:gravity">center</item>
@@ -169,7 +169,7 @@
   <!-- Second Button Theme -->
   <style name="CustomTonalButton" parent="@style/Widget.Material3.Button.TonalButton">
     <item name="android:textStyle">bold</item>
-    <item name="fontFamily">@font/quick_sand_medium</item>
+<!--    <item name="fontFamily">@font/quick_sand_medium</item>-->
     <item name="android:layout_width">match_parent</item>
     <item name="android:layout_height">56dp</item>
     <item name="android:gravity">center</item>
@@ -179,7 +179,7 @@
   <style name="CustomInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
     <item name="android:layout_width">match_parent</item>
     <item name="android:layout_height">wrap_content</item>
-    <item name="fontFamily">@font/quick_sand_medium</item>
+<!--    <item name="fontFamily">@font/quick_sand_medium</item>-->
     <item name="hintEnabled">false</item>
     <item name="boxStrokeWidth">0dp</item>
     <item name="boxBackgroundColor">?attr/colorSurfaceVariant</item>
@@ -187,13 +187,13 @@
   </style>
 
   <style name="CustomInputText" parent="ThemeOverlay.Material3.TextInputEditText.OutlinedBox">
-    <item name="fontFamily">@font/quick_sand_medium</item>
+<!--    <item name="fontFamily">@font/quick_sand_medium</item>-->
   </style>
 
   <style name="CustomAutoCompleteLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
     <item name="android:layout_width">match_parent</item>
     <item name="android:layout_height">wrap_content</item>
-    <item name="fontFamily">@font/quick_sand_medium</item>
+<!--    <item name="fontFamily">@font/quick_sand_medium</item>-->
     <item name="hintEnabled">false</item>
     <item name="boxStrokeWidth">0dp</item>
     <item name="boxBackgroundColor">?attr/colorSurfaceVariant</item>

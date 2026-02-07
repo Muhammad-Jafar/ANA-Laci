@@ -171,6 +171,6 @@
     <string name="kamera_desc">Ambil foto dari kamera</string>
     <string name="storage_desc">Pilih dari penyimpanan internal</string>
     <string name="laci_kelola_cicilan">Laci: Kelola Cicilan</string>
-    <string name="title_dynamicfeature">Module Title</string>
+    <string name="title_dynamicfeature" translatable="false">Module Title</string>
 
 </resources>

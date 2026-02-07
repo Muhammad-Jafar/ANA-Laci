@@ -44,7 +44,7 @@
     <item name="harmonizeLeaf">true</item>
 
     <item name="android:windowActivityTransitions">true</item>
-    <item name="fontFamily">@font/quick_sand_medium</item>
+<!--    <item name="fontFamily">@font/quick_sand_medium</item>-->
 
     <item name="android:statusBarColor">@android:color/transparent</item>
     <item name="android:navigationBarColor">@android:color/transparent</item>
